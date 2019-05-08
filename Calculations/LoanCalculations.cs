@@ -1,6 +1,7 @@
 ﻿using Infractructure.Interfaces;
 using Models;
 using System;
+using System.Collections.Generic;
 
 namespace Calculations
 {
@@ -25,6 +26,39 @@ namespace Calculations
                 TotalRepaid = totalRepaid,
                 TotalInterest = totalInterest
             };
+
+            return result;
+        }
+        /// <summary>
+        /// Executing of Loan calculations for getting list of RepaymentScheduleItem
+        /// </summary>
+        /// <param name="amount">Loan amount</param>
+        /// <param name="apr">Annual Percentage Rate</param>
+        /// <param name="paymentsCount">Count of payments</param>
+        /// <returns>List of RepaymentScheduleItem</returns>
+        public IEnumerable<RepaymentScheduleItem> GetRepaymentScheduleInfo(decimal amount, int paymentsCount, decimal apr)
+        {
+            var result = new List<RepaymentScheduleItem>(paymentsCount);
+
+            var installment = GetInstallmentAmount(amount, paymentsCount, apr);
+            var interestRate = GetInterestRate(paymentsCount, apr);
+            var amountDue = amount;
+            decimal interest;
+            decimal principal;
+            for(var i = 0; i < paymentsCount; i++)
+            {
+                interest = amountDue * interestRate;
+                principal = installment - interest;
+
+                result.Add(new RepaymentScheduleItem
+                {
+                    InstallmentNumber = i + 1,
+                    AmountDue = Math.Round(amountDue, 2),
+                    Interest = Math.Round(interest),
+                    Principal = Math.Round(principal)
+                });
+                amountDue = amountDue - principal;
+            }
 
             return result;
         }
