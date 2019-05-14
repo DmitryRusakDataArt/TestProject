@@ -1,6 +1,6 @@
 using Calculations;
-using Infractructure.Interfaces;
-using Infractructure.Services;
+using Infrastructure.Interfaces;
+using Infrastructure.Services;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Models;
 using System.Linq;

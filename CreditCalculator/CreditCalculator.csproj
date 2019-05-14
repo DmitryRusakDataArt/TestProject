@@ -14,7 +14,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Infractructure\Infractructure.csproj" />
     <ProjectReference Include="..\Calculations\Calculations.csproj" />
   </ItemGroup>
 
